@@ -8,7 +8,7 @@ users = {
     "robot": {
         "password": "play",
         "token": "",
-        "priviliged": True
+        "privileged": True
     }
 }
 

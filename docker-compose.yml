@@ -1,0 +1,8 @@
+services:
+    webapp:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - "9084:9083"
+        command: "--port 9083"

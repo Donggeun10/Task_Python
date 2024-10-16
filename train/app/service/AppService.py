@@ -10,4 +10,4 @@ logger.addHandler(stream_handler)
 logger.addHandler(file_handler)
 
 def is_service_game_code(app : App):
-    return app != None
+    return app is not None

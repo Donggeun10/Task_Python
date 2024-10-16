@@ -32,8 +32,18 @@
 ```
 ## 4. Docker 실행 테스트
 ```
-- docker build -t pyserver:local .  && docker run --gpus=all -p 9084:9083 pyserver:local --port 9083 
+- docker build -t pyserver:local .  && docker run --gpus=all -p 9084:9083 pyserver:local --port 9083
+- docker-compse up 
 ```
 
+## 5. Pytest 테스트 코드 실행
+```
+- pytest test\controller
+```
+
+## 6. API 명세
+```
+- Swagger UI : http://localhost:9084/docs
+```
 
 
