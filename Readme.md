@@ -1,12 +1,11 @@
-# Backend Server
-- Python FastAPI 기반의 RESTful API 서버 구현
-- Sqlite Database 를 이용한 데이터 저장 및 조회
-- SQLAlchemy JPA 를 이용한 데이터 CRUD
+# Backend Server features
+- RESTful API Server Sample code based on Python FastAPI
+- Database such as Sqlite is accessed such as insert, select, update and delete (CRUD) via SQLAlchemy JPA
 - ~~LockModeType.PESSIMISTIC_WRITE 를 이용한 데이터 동시성 제어~~
-- Docker 를 이용한 이미지 생성 및 실행
-- Pyinstaller 를 이용한 실행 파일 생성
-- Pytest 를 이용한 테스트 코드 작성
-- Basic Authentication 을 이용한 인증
+- Container creation and execution using Docker
+- execution file creation by Pyinstaller
+- Writing test code in order to execute by Pytest
+- applying Basic Authentication and OAuth Token
 
 ## 1. Frameworks And Tools
 - Python 3.12
@@ -19,29 +18,29 @@
 - Swagger UI
 - pytest
 
-## 2. Local 실행 테스트
+## 2. Local execution test
 ```
 - uvicorn train.app.application:app --host 0.0.0.0 --port 9084
 - python train\app\application.py
   -  set PYTHONPATH=%PYTHONPATH%;%cd%
 - pip freeze > requirements.txt
 ```
-## 3. pyinstaller 실행 파일 생성 - 윈도즈 환경
+## 3. Execution file creation - Windows environment
 ```
 - pyinstaller main.spec
 ```
-## 4. Docker 실행 테스트
+## 4. Container execution test
 ```
 - docker build -t pyserver:local .  && docker run --gpus=all -p 9084:9083 pyserver:local --port 9083
 - docker-compse up 
 ```
 
-## 5. Pytest 테스트 코드 실행
+## 5. Execution of test code
 ```
 - pytest test\controller
 ```
 
-## 6. API 명세
+## 6. API spec URL
 ```
 - Swagger UI : http://localhost:9084/docs
 ```

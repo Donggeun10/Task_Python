@@ -1,5 +1,4 @@
 import logging
-from functools import lru_cache
 
 from sqlalchemy.orm import Session
 
@@ -16,7 +15,6 @@ logger.addHandler(file_handler)
 def get_items(db: Session):
     return db.query(Item).all()
 
-@lru_cache()
 def get_item(db: Session, item_id: int):
     return db.query(Item).filter(Item.id == item_id).first()
 

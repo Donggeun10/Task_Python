@@ -20,7 +20,6 @@ COPY --chown=appuser train/app/ train/app/
 COPY --chown=appuser train/application.spec ./application.spec
 
 EXPOSE 9084
-ENV GOOGLE_CLOUD_PROJECT="nm-stg-usw2-crashreport"
 ENV PYTHONPATH="/home/appuser"
 #RUN pytest test/controller
 RUN pyinstaller application.spec
@@ -39,10 +38,10 @@ USER appuser
 
 # 2) Native 실행 파일 복사
 COPY --from=builder /home/appuser/dist/ /home/appuser/
+COPY --chown=appuser train/.env.local /home/appuser/train/.env.local
 
 # 3) 변수 설정
 EXPOSE 9084
-ENV GOOGLE_CLOUD_PROJECT="nm-stg-usw2-crashreport"
 
 # 4) 실행
 WORKDIR /home/appuser

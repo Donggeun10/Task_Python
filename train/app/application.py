@@ -44,8 +44,8 @@ async def add_process_time_header(request: Request, call_next):
 
 @app.get("/")
 async def root(authentication = Depends(verification)):
-    print(authentication)
-    return RedirectResponse(url="/hello")
+    if authentication:
+        return RedirectResponse(url="/api/hello")
 
 
 def serve(args):

@@ -1,29 +1,46 @@
+import logging
+from typing import List
+
 from fastapi import APIRouter, HTTPException
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from starlette import status
-from starlette.responses import RedirectResponse
 
-from train.app.configuration.SecurityConfig import verification
+from train.app.configuration.LoggingConfig import stream_handler, file_handler
+from train.app.configuration.SecurityConfig import verification, validate_token
 from train.app.configuration.database import get_db
-from train.app.schema.Item import ItemCreate
+from train.app.schema.Item import ItemCreate, Item
 from train.app.service import crud
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
+
 router = APIRouter(
-    prefix="",
+    prefix="/api",
     tags=["items"],
 )
 
 @router.get("/hello")
 async def root(authentication = Depends(verification)):
-    print(authentication)
-    return RedirectResponse(url="/items")
+    if authentication:
+        return "hello world"
 
 
-@router.get("/items")
-async def get_items(db: Session = Depends(get_db)):
-    items = crud.get_items(db)
-    return items
+@router.get("/items", response_model=List[Item])
+async def get_items(db: Session = Depends(get_db), authentication = Depends(verification)):
+    if authentication:
+        return crud.get_items(db)
+
+
+# Protected, get items route
+@router.get('/item/sample', response_model=Item)
+def read_items(valid: bool = Depends(validate_token)):
+    if valid :
+        return Item.model_validate({'id': 1, 'name': 'red ball', 'description': 'A red ball', 'price': 100})
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 @router.post("/item",
              status_code=status.HTTP_201_CREATED,
