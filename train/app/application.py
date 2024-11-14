@@ -7,16 +7,13 @@ import uvicorn
 from fastapi import (FastAPI, Depends, Request)
 from fastapi.responses import RedirectResponse
 
-from train.app.configuration.LoggingConfig import stream_handler, \
-    file_handler
+from train.app.configuration.LoggingConfig import log
 from train.app.configuration.SecurityConfig import verification
 from train.app.configuration.database import create_tables
-from train.app.controller import ItemController
+from train.app.controller import ItemController, OllamaController
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
+logger.parent = log
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -32,6 +29,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(ItemController.router)
+app.include_router(OllamaController.router)
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):

@@ -9,15 +9,15 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, \
     HTTPAuthorizationCredentials
 from starlette.config import Config
 
-from train.app.configuration.LoggingConfig import stream_handler, file_handler
+from train.app.configuration.LoggingConfig import log
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
-
+logger.parent = log
 
 basic_security = HTTPBasic()
+
+bearer_security = HTTPBearer()
+config = Config('train/.env.local')
 
 users = {
     "robot": {
@@ -49,8 +49,7 @@ def validate_user_info(username: str, password: str):
     else:
         return False
 
-bearer_security = HTTPBearer()
-config = Config('train/.env.local')
+
 
 def validate_token(authorization: HTTPAuthorizationCredentials = Depends(
     bearer_security)):

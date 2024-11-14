@@ -5,8 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-from train.app.configuration.LoggingConfig import stream_handler, \
-    file_handler
+from train.app.configuration.LoggingConfig import log
 
 user = "db_user"
 password = "db_pass!@#"
@@ -32,11 +31,8 @@ engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, connect_args={"
 SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
-
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
+logger.parent = log
 
 def create_tables():
   Base.metadata.create_all(bind=engine)

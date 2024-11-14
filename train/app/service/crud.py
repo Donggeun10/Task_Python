@@ -2,15 +2,12 @@ import logging
 
 from sqlalchemy.orm import Session
 
-from train.app.configuration.LoggingConfig import stream_handler, file_handler
+from train.app.configuration.LoggingConfig import log
 from train.app.entity.Item import Item
 from train.app.schema.Item import ItemCreate
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
-
+logger.parent = log
 
 def get_items(db: Session):
     return db.query(Item).all()

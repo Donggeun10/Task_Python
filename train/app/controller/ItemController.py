@@ -1,4 +1,3 @@
-import logging
 from typing import List
 
 from fastapi import APIRouter, HTTPException
@@ -6,16 +5,10 @@ from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from starlette import status
 
-from train.app.configuration.LoggingConfig import stream_handler, file_handler
 from train.app.configuration.SecurityConfig import verification, validate_token
 from train.app.configuration.database import get_db
 from train.app.schema.Item import ItemCreate, Item
 from train.app.service import crud
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
 
 router = APIRouter(
     prefix="/api",

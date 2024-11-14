@@ -3,9 +3,10 @@
 - Database such as Sqlite is accessed such as insert, select, update and delete (CRUD) via SQLAlchemy JPA
 - ~~LockModeType.PESSIMISTIC_WRITE 를 이용한 데이터 동시성 제어~~
 - Container creation and execution using Docker
-- execution file creation by Pyinstaller
+- Execution file creation by Pyinstaller
 - Writing test code in order to execute by Pytest
-- applying Basic Authentication and OAuth Token
+- Applying Basic Authentication and OAuth Token
+- Added Ollama’s Rest API client integration function 
 
 ## 1. Frameworks And Tools
 - Python 3.12
